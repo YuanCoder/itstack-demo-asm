@@ -2,12 +2,15 @@ package org.itstack.demo.asm;
 
 import org.objectweb.asm.*;
 
+import java.io.IOException;
+
 import static org.objectweb.asm.Opcodes.ASM4;
 
 /**
  * @author Jenpin
  * @date 2020/6/6 22:08
- * @description TODO
+ * @description https://github.com/MyGitBooks/asm/blob/master/docs/notes/2.2%E6%8E%A5%E5%8F%A3%E5%92%8C%E7%BB%84%E4%BB%B6.md
+ *             分析类:在分析一个已经存在的类时，惟一必需的组件是 ClassReader 组件
  **/
 public class ClassPrinter extends ClassVisitor {
 
@@ -57,5 +60,16 @@ public class ClassPrinter extends ClassVisitor {
     @Override
     public void visitEnd() {
         System.out.println("}");
+    }
+
+    /**
+     * 分析类
+     * @param args
+     * @throws IOException
+     */
+    public static void main(String[] args) throws IOException {
+        ClassPrinter cp = new ClassPrinter();
+        ClassReader cr = new ClassReader("java.lang.Runnable");
+        cr.accept(cp, 0);
     }
 }
