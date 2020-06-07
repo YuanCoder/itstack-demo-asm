@@ -1,4 +1,4 @@
-package org.itstack.demo.asm;
+package org.itstack.demo.asm.asmapi;
 
 import org.objectweb.asm.ClassVisitor;
 

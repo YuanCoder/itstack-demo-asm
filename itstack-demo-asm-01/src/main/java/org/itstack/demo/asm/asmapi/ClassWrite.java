@@ -1,5 +1,6 @@
-package org.itstack.demo.asm;
+package org.itstack.demo.asm.asmapi;
 
+import org.itstack.demo.asm.HelloWorld;
 import org.objectweb.asm.ClassWriter;
 
 import java.io.File;
