@@ -21,6 +21,7 @@ public class ClassWrite {
      * @return*/
     public static byte[] write() {
         ClassWriter cw = new ClassWriter(0);
+        //已编译类不包含 Package 和 Import 部分，因此，所有类名都必须是完全限定的
         cw.visit(V1_5, ACC_PUBLIC + ACC_ABSTRACT + ACC_INTERFACE,
                 "pkg/Comparable", null, "java/lang/Object", new String[]{"pkg/Mesurable"});
         cw.visitField(ACC_PUBLIC + ACC_FINAL + ACC_STATIC, "LESS", "I",
@@ -50,7 +51,21 @@ public class ClassWrite {
 
     public static void main(String[] args) {
         byte[] bytes = write();
+        /** 方式一 */
         outputClazz(bytes);
+
+        /** 方式二 */
+//        MyClassLoader mc = new MyClassLoader();
+//        mc.defineClass("pkg.Comparable", bytes);
+
+        /** 方式三 */
+//        StubClassLoader sc = new StubClassLoader();
+//        try {
+//            sc.findClass("pkg.Comparable");
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
+
     }
 
     /**
@@ -68,11 +83,33 @@ public class ClassWrite {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (null != out) try {
-                out.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+            if (null != out) {
+                try {
+                    out.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
+
+    static class MyClassLoader extends ClassLoader {
+        public Class defineClass(String name, byte[] b) {
+            return defineClass(name, b, 0, b.length);
+        }
+    }
+
+    static class StubClassLoader extends ClassLoader {
+        @Override
+        protected Class findClass(String name) throws ClassNotFoundException {
+            if (name.endsWith("_Stub")) {
+                ClassWriter cw = new ClassWriter(0);
+                byte[] b = cw.toByteArray();
+                return defineClass(name, b, 0, b.length);
+            }
+            return super.findClass(name);
+        }
+    }
+
+
 }
