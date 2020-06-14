@@ -42,6 +42,7 @@ public class MethodTest extends ClassLoader {
     private byte[] getBytes(String className) throws IOException {
 
         ClassReader cr = new ClassReader(className);
+        //COMPUTE_MAXS 的作用是将自动计算本地变量表最大值和操作数栈最大值的任务托付给了ASM
         ClassWriter cw = new ClassWriter(cr, ClassWriter.COMPUTE_MAXS);
         cr.accept(new ClassVisitor(ASM5, cw) {
 

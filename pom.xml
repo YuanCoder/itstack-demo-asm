@@ -15,6 +15,7 @@
         <module>itstack-demo-asm-04</module>
         <module>itstack-demo-asm-05</module>
         <module>itstack-demo-asm-06</module>
+        <module>itstack-demo-asm-test</module>
     </modules>
 
     <dependencies>

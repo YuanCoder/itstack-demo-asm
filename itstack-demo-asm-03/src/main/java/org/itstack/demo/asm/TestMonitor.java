@@ -16,6 +16,7 @@ public class TestMonitor extends ClassLoader {
     public static void main(String[] args) throws IOException, NoSuchMethodException, IllegalAccessException, InstantiationException, InvocationTargetException {
 
         ClassReader cr = new ClassReader(MyMethod.class.getName());
+        //COMPUTE_MAXS 的作用是将自动计算本地变量表最大值和操作数栈最大值的任务托付给了ASM
         ClassWriter cw = new ClassWriter(cr, ClassWriter.COMPUTE_MAXS);
 
         {
