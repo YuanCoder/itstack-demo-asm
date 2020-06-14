@@ -13,6 +13,10 @@ public class Cat {
 
     private Double price;
 
+    public static final String address = "china";
+
+
+
     public Cat() {
     }
 
@@ -42,6 +46,10 @@ public class Cat {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public static String getAddress() {
+        return address;
     }
 
     public String say() {

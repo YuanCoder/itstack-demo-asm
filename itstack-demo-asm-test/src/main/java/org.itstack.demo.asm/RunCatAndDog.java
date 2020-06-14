@@ -5,7 +5,7 @@ package org.itstack.demo.asm;
  * @date 2020/6/14 11:44
  * @description TODO
  **/
-public class TestAsm {
+public class RunCatAndDog {
 
     public static void main(String[] args) {
         Cat cat = new Cat("Tom");
