@@ -18,6 +18,7 @@ public class TestMonitor extends ClassLoader {
         ClassWriter cw = new ClassWriter(cr, ClassWriter.COMPUTE_MAXS);
 
         ClassVisitor cv = new ProfilingClassAdapter(cw, MyMethod.class.getSimpleName());
+        //读取 class 的时候需要同时展开栈映射帧（StackMap Frame），如果我们需要使用自定义的 MethodVisitor 去修改方法中的指令时必须要指定这个参数
         cr.accept(cv, ClassReader.EXPAND_FRAMES);
 
         byte[] bytes = cw.toByteArray();
@@ -76,6 +77,7 @@ public class TestMonitor extends ClassLoader {
         @Override
         protected void onMethodEnter() {
             // 输出方法和参数
+            //入栈
             mv.visitLdcInsn(name);
             mv.visitInsn(ICONST_2);
             mv.visitIntInsn(NEWARRAY, T_INT);
