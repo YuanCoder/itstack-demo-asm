@@ -11,6 +11,9 @@ import java.lang.reflect.Method;
 
 import static org.objectweb.asm.Opcodes.ASM5;
 
+/**
+ * 在原有方法上字节码增强监控耗时
+ */
 public class TestMonitor extends ClassLoader {
 
     public static void main(String[] args) throws IOException, NoSuchMethodException, IllegalAccessException, InstantiationException, InvocationTargetException {

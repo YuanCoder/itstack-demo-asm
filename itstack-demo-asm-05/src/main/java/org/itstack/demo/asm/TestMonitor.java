@@ -10,6 +10,9 @@ import java.lang.reflect.Method;
 
 import static org.objectweb.asm.Opcodes.ASM5;
 
+/**
+ * 用字节码增强调用外部方法
+ */
 public class TestMonitor extends ClassLoader {
 
     public static void main(String[] args) throws Exception {

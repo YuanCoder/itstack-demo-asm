@@ -11,6 +11,9 @@ import java.lang.reflect.Method;
 
 import static org.objectweb.asm.Opcodes.ASM5;
 
+/**
+ * 字节码控制打印方法的入参
+ */
 public class TestMonitor extends ClassLoader {
 
     public static void main(String[] args) throws IOException, NoSuchMethodException, IllegalAccessException, InstantiationException, InvocationTargetException {
