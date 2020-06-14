@@ -6,4 +6,11 @@ package org.itstack.demo.asm;
  * @description TODO
  **/
 public class TestAsm {
+
+    public static void main(String[] args) {
+        Cat cat = new Cat("Tom");
+        Dog dog = new Dog("H");
+        cat.getName();
+        dog.getName();
+    }
 }
