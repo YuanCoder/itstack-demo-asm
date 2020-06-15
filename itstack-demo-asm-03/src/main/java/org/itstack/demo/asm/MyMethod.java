@@ -10,4 +10,7 @@ public class MyMethod {
         return uid;
     }
 
+    public String sayHello() {
+        return "hello";
+    }
 }
