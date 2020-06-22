@@ -19,13 +19,6 @@
         <module>itstack-demo-javassist-01</module>
         <module>itstack-demo-bytebuddy-01</module>
     </modules>
-    <repositories>
-        <repository>
-            <id>apache.snapshots</id>
-            <name>Snapshot Repository</name>
-            <url>http://cvs.apache.org/maven-snapshot-repository</url>
-        </repository>
-    </repositories>
 
     <dependencies>
         <dependency>
@@ -58,11 +51,6 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>1.7.24</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-pipeline</artifactId>
-            <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
