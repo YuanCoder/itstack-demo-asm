@@ -16,6 +16,8 @@
         <module>itstack-demo-asm-05</module>
         <module>itstack-demo-asm-06</module>
         <module>itstack-demo-asm-test</module>
+        <module>itstack-demo-javassist-01</module>
+        <module>itstack-demo-bytebuddy-01</module>
     </modules>
     <repositories>
         <repository>
