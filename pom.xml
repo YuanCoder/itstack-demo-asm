@@ -17,6 +17,13 @@
         <module>itstack-demo-asm-06</module>
         <module>itstack-demo-asm-test</module>
     </modules>
+    <repositories>
+        <repository>
+            <id>apache.snapshots</id>
+            <name>Snapshot Repository</name>
+            <url>http://cvs.apache.org/maven-snapshot-repository</url>
+        </repository>
+    </repositories>
 
     <dependencies>
         <dependency>
@@ -50,6 +57,11 @@
             <artifactId>slf4j-api</artifactId>
             <version>1.7.24</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pipeline</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -59,7 +71,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
                     <source>1.8</source>
-                    <target>1.08</target>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
         </plugins>
