@@ -12,7 +12,7 @@ import java.util.Random;
 public class Cat {
 
     @SneakyThrows
-    public String queryCatName(Long id) {
+    public String queryCatName(Long id, String token) {
         Thread.sleep(new Random().nextInt(500));
         return "this cat name is Tom, id:"+id;
     }

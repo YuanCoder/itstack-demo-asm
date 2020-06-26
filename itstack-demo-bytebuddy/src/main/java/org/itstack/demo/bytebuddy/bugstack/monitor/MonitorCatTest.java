@@ -5,20 +5,19 @@ import lombok.extern.slf4j.Slf4j;
 import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.dynamic.DynamicType;
 import net.bytebuddy.implementation.MethodDelegation;
-import net.bytebuddy.implementation.bind.annotation.Origin;
-import net.bytebuddy.implementation.bind.annotation.RuntimeType;
-import net.bytebuddy.implementation.bind.annotation.SuperCall;
+import net.bytebuddy.implementation.bind.annotation.*;
 import net.bytebuddy.matcher.ElementMatchers;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Arrays;
+import java.lang.reflect.InvocationTargetException;
+
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.TimeUnit;
+import java.util.Arrays;
 import java.util.stream.Collectors;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.Callable;
 
 /**
  * @author Jenpin
@@ -32,8 +31,8 @@ public class MonitorCatTest {
         DynamicType.Unloaded<?> dynamicType = buildDynamicType();
         // 反射调用
         Class<?> clazz = dynamicType.load(MonitorCatTest.class.getClassLoader()).getLoaded();
-        clazz.getMethod("queryCatName", Long.class)
-                .invoke(clazz.newInstance(), 100L);
+        clazz.getMethod("queryCatName", Long.class, String.class)
+                .invoke(clazz.newInstance(), 100L, "sdfasfasdfasdf");
     }
 
     /**
@@ -63,7 +62,7 @@ public class MonitorCatTest {
          * @throws Exception
          */
         @RuntimeType
-        public static Object intercept2(@SuperCall Callable<?> callable) throws Exception {
+        public static Object intercept01(@SuperCall Callable<?> callable) throws Exception {
             Stopwatch stopwatch = Stopwatch.createStarted();
             try {
                 return callable.call();
@@ -83,7 +82,7 @@ public class MonitorCatTest {
          * @throws Exception
          */
         @RuntimeType
-        public static Object intercept(@Origin Method method, @SuperCall Callable<?> callable) throws Exception {
+        public static Object intercept02(@Origin Method method, @SuperCall Callable<?> callable) throws Exception {
             Stopwatch stopwatch = Stopwatch.createStarted();
             Object result = null;
             try {
@@ -107,5 +106,49 @@ public class MonitorCatTest {
                 log.info("出参结果:" + result);
             }
         }
+
+
+        /**
+         * 注解说明： @SuperCall 用于调用父类版本的方法
+         *           @RuntimeType 定义运行时的目标方法
+         *           @Origin 用于拦截原有方法，这样就可以获取到方法中的相关信息
+         *           @AllArguments 获取全部参数
+         *           @Argumen 获取指定的参数
+         *
+         * @param method 获取方法信息
+         * @param args 全部参数
+         * @param arg 获取指定的参数
+         * @param callable
+         * @return
+         * @throws Exception
+         */
+        @RuntimeType
+        public static Object intercept03(@Origin Method method, @AllArguments Object[] args, @Argument(0) Object arg, @SuperCall Callable<?> callable) throws Exception {
+            Stopwatch stopwatch = Stopwatch.createStarted();
+            Object result = null;
+            try {
+                result = callable.call();
+                return result;
+            } finally {
+                log.info("方法耗时：" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+
+                //方法
+                log.info("方法所属类:" + method.getDeclaringClass());
+                log.info("方法名称:" + method.getName());
+                List<Pair<String, String>> pairs = Arrays.stream(method.getParameterTypes())
+                        .map(e -> Pair.of(e.getTypeName(), e.getName()))
+                        .collect(Collectors.toList());
+                //入参
+                log.info("入参个数:" + method.getParameterCount());
+                log.info("入参类型:" + StringUtils.join(pairs, ","));
+                log.info("全部入参内容：" + StringUtils.join(Arrays.stream(args).collect(Collectors.toList()), ", "));
+                log.info("指定入参内容：" + arg);
+
+                //出参
+                log.info("出参类型:" + method.getReturnType().getName());
+                log.info("出参结果:" + result);
+            }
+        }
+
     }
 }

@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>itstack-demo-bytebuddy-01</artifactId>
+    <artifactId>itstack-demo-bytebuddy</artifactId>
     <dependencies>
         <!-- https://mvnrepository.com/artifact/net.bytebuddy/byte-buddy -->
         <dependency>
