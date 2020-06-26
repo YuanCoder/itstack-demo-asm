@@ -19,6 +19,7 @@ import java.lang.reflect.Method;
  * @author Jenpin
  * @date 2020/6/26 15:39
  * @description 使用委托实现抽象类方法并注入自定义注解信息
+ *        涉及到的知识点: 委托方法使用、复杂类型的泛型创建、类和方法自定义注解的添加以及写入字节码信息到文件中
  **/
 @Slf4j
 public class MonitorCatRepositoryTest {
