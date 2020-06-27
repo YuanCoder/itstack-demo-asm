@@ -92,6 +92,7 @@ public class AddFieldTest {
                 .redefine(Person.class)
                 .name(Person.class.getPackage().getName().concat(".").concat("PersonByRedefine02"))
                 .defineField("address", String.class, Visibility.PRIVATE);
-        return ByteBuddyUtils.createSetter(builder, "address", String.class).make();
+        builder = ByteBuddyUtils.createSetter(builder, "address", String.class);
+        return ByteBuddyUtils.createGetter(builder, "address", String.class).make();
     }
 }

@@ -43,13 +43,13 @@ public class ByteBuddyUtils {
      *
      * @param builder
      * @param propertyName
-     * @param typeDefinition
+     * @param type
      * @return
      */
-    public static DynamicType.Builder<?> createSetter(DynamicType.Builder<?> builder, String propertyName, Class<?> typeDefinition) {
+    public static DynamicType.Builder<?> createSetter(DynamicType.Builder<?> builder, String propertyName, Class<?> type) {
         return builder
                 .defineMethod(buildSetterName(propertyName), Void.TYPE, Visibility.PUBLIC)
-                .withParameters(typeDefinition)
+                .withParameters(type)
                 .intercept(FieldAccessor.ofBeanProperty());
     }
 
@@ -64,6 +64,24 @@ public class ByteBuddyUtils {
         sb.append(name);
         sb.setCharAt(plen, Character.toUpperCase(name.charAt(0)));
         return sb.toString();
+    }
+
+    /**
+     * 生成get方法
+     *
+     * @param builder
+     * @param propertyName
+     * @param type
+     * @return
+     */
+    public static DynamicType.Builder<?> createGetter(DynamicType.Builder<?> builder, String propertyName, Class<?> type) {
+        return builder
+                .defineMethod(buildGetterName(propertyName), type, Visibility.PUBLIC)
+                .intercept(FieldAccessor.ofBeanProperty());
+    }
+
+    private static String buildGetterName(String fieldName) {
+        return cap("get", fieldName);
     }
 
 }
