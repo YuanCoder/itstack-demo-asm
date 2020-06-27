@@ -29,7 +29,7 @@ public class AddFieldTest {
 
     @SneakyThrows
     public static void main(String[] args) {
-        DynamicType.Unloaded<Person> dynamicType = (DynamicType.Unloaded<Person>) buildDynamicTypeByRedefine02();
+        DynamicType.Unloaded<Person> dynamicType = (DynamicType.Unloaded<Person>) buildDynamicTypeByRedefine03();
         dynamicType.saveIn(new File(Person.class.getResource("/").getPath()));
 //        Class<Person> personClass = (Class<Person>) dynamicType.load(AddFieldTest.class.getClassLoader()).getLoaded();
     }
@@ -94,5 +94,23 @@ public class AddFieldTest {
                 .defineField("address", String.class, Visibility.PRIVATE);
         builder = ByteBuddyUtils.createSetter(builder, "address", String.class);
         return ByteBuddyUtils.createGetter(builder, "address", String.class).make();
+    }
+
+
+    /**
+     * 通过 Redefine 实现 （通过生成子类实现）
+     *    生成类回继承原有类，不影响原有类，
+     * @return
+     */
+    public static DynamicType.Unloaded<?> buildDynamicTypeByRedefine03() {
+        String fieldName = "address";
+        String setterName = "setAddress";
+        return new ByteBuddy(ClassFileVersion.JAVA_V8)
+                .redefine(Person.class)
+                .name(Person.class.getPackage().getName().concat(".").concat("PersonByRedefine03"))
+                .defineField(fieldName, String.class, Visibility.PRIVATE)
+                .defineMethod(setterName, String.class, Visibility.PUBLIC)
+                .intercept(FieldAccessor.ofField( fieldName ))
+                .make();
     }
 }

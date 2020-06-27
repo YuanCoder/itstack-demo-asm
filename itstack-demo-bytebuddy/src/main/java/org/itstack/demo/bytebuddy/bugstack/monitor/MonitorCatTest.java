@@ -3,10 +3,14 @@ package org.itstack.demo.bytebuddy.bugstack.monitor;
 import com.google.common.base.Stopwatch;
 import lombok.extern.slf4j.Slf4j;
 import net.bytebuddy.ByteBuddy;
+import net.bytebuddy.dynamic.ClassFileLocator;
 import net.bytebuddy.dynamic.DynamicType;
+import net.bytebuddy.dynamic.scaffold.TypeValidation;
+import net.bytebuddy.dynamic.scaffold.subclass.ConstructorStrategy;
 import net.bytebuddy.implementation.MethodDelegation;
 import net.bytebuddy.implementation.bind.annotation.*;
 import net.bytebuddy.matcher.ElementMatchers;
+import net.bytebuddy.pool.TypePool;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -36,7 +40,7 @@ public class MonitorCatTest {
     }
 
     /**
-     * 构建 dynamicType
+     * 构建 已经编译的类 dynamicType
      * @return
      */
     public static DynamicType.Unloaded<?> buildDynamicType() {
@@ -48,6 +52,7 @@ public class MonitorCatTest {
                 .intercept(MethodDelegation.to(MonitorQueryCatName.class))
                 .make();
     }
+
 
     @Slf4j
     public static class MonitorQueryCatName {
