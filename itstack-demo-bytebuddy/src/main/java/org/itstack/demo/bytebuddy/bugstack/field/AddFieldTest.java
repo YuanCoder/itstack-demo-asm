@@ -1,20 +1,15 @@
-package org.itstack.demo.bytebuddy.bugstack.addfield;
+package org.itstack.demo.bytebuddy.bugstack.field;
 
 import lombok.SneakyThrows;
 import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.ClassFileVersion;
-import net.bytebuddy.asm.Advice;
 import net.bytebuddy.description.modifier.Visibility;
 import net.bytebuddy.dynamic.DynamicType;
 import net.bytebuddy.implementation.FieldAccessor;
-import net.bytebuddy.implementation.MethodDelegation;
 import org.itstack.demo.bytebuddy.bugstack.ByteBuddyUtils;
 import org.itstack.demo.bytebuddy.bugstack.Person;
 
 import java.io.File;
-import java.lang.reflect.Modifier;
-
-import static net.bytebuddy.matcher.ElementMatchers.*;
 
 /**
  * @author Jenpin
